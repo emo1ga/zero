@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'database_helper.dart';
 import 'feed_screen.dart';
 
 class CertifyScreen extends StatefulWidget {
@@ -8,20 +9,31 @@ class CertifyScreen extends StatefulWidget {
 
 class _CertifyScreenState extends State<CertifyScreen> {
   final _textController = TextEditingController();
+  final DatabaseHelper _databaseHelper = DatabaseHelper();
 
-  void _submitPost() {
+  void _submitFeed() async {
     if (_textController.text.isNotEmpty) {
-      // 여기에 새로운 게시글 추가하는 로직 구현
-      // 예: 서버에 업로드 또는 로컬 상태에 저장
+      await _databaseHelper.insertFeed(_textController.text, 1, 1); // 예시로 userId와 challengeId를 1로 설정
 
-      // 현재는 그냥 콘솔에 출력
-      print('Post submitted with text: ${_textController.text}');
+      // 콘솔에 출력
+      print('Feed submitted with content: ${_textController.text}');
+      _textController.clear(); // 입력 필드 초기화
+
       Navigator.push(
         context,
         MaterialPageRoute(
           builder: (context) => FeedScreen(school: "명지대학교"),
         ),
       );
+    } else {
+      print('Text field is empty');
+    }
+  }
+
+  void _showFeeds() async {
+    List<Map<String, dynamic>> feeds = await _databaseHelper.getFeeds();
+    for (var feed in feeds) {
+      print('Feed: ${feed['feed_content']}');
     }
   }
 
@@ -30,6 +42,12 @@ class _CertifyScreenState extends State<CertifyScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text('이번주 챌린지: 텀블러 사용'),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.view_list),
+            onPressed: _showFeeds,
+          ),
+        ],
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -54,7 +72,7 @@ class _CertifyScreenState extends State<CertifyScreen> {
               ),
             ),
             ElevatedButton(
-              onPressed: _submitPost,
+              onPressed: _submitFeed,
               child: Text('제출'),
             ),
           ],

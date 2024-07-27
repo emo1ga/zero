@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'post_card.dart';
+import '../Mypage/post_card.dart';
 
 class FeedScreen extends StatelessWidget {
   final String school;

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'certify_screen.dart';
+import '../Feed/certify_screen.dart';
 import 'rank_screen.dart';
-import 'my_page_screen.dart';
+import '../Mypage/my_page_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   @override

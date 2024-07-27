@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'feed_screen.dart';
+import '../Feed/feed_screen.dart';
 
 class RankScreen extends StatelessWidget {
   final List<Map<String, String>> data = [
